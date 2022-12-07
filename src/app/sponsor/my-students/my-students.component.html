@@ -1,0 +1,210 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Students</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon slot="icon-only" name="caret-forward-circle"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-buttons slot="end"  *ngIf="cardView" (click)="toogleCardView(false)">
+        <ion-icon slot="icon-only" name="list"  ></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end"  *ngIf="!cardView" (click)="toogleCardView(true)">
+        <ion-icon  slot="icon-only" name="grid" ></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="grey-bg">
+  <ion-grid *ngIf="loaded">
+    <ion-row>
+      <ion-col size="8">
+        <ion-searchbar animated="true" placeholder="Search"  [debounce]="500" [(ngModel)]="Searchterm" placeholder='Try "Jas"'></ion-searchbar >
+      </ion-col>
+      <ion-col size="4">
+        <ion-list >
+          <ion-item>
+            <ion-select placeholder="Status"  animated="true" interface="popover" [(ngModel)]="statusFilter">
+              <ion-select-option value="Applied">Applied</ion-select-option>
+              <ion-select-option value="Under Review">Under Review</ion-select-option>
+              <ion-select-option value="Rejected">Rejected</ion-select-option>
+              <ion-select-option value="Waiting">Waiting for sponsor</ion-select-option>
+              <ion-select-option value="Lowonfund">Low on fund</ion-select-option>
+              <ion-select-option value="Sponsored">Sponsored</ion-select-option>
+              <ion-select-option value="Inactive">Inactive</ion-select-option>
+              <ion-select-option  value="">All</ion-select-option>
+
+            </ion-select>
+          </ion-item>
+        </ion-list> 
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="cardView;else listView">
+      <ion-col *ngFor="let student of students|filter:Searchterm|filter:statusFilter;let indexOfelement=index;" sizeLg="3" sizeMd="4" sizeXs="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-chip>
+              <ion-avatar>
+                <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>   
+              <ion-label>{{student.StudentGender}} {{student.StudentFirstName}}  {{student.StudentLastName}}</ion-label>
+              <!-- <ion-icon name="eye"></ion-icon> -->
+              
+            </ion-chip>
+            <ion-chip>
+              {{getAge(student.StudentDOB)+' Yr'}} 
+            </ion-chip>
+            <!-- <ion-card-title>{{student.StudentGender}} {{student.StudentFirstName}}  {{student.StudentLastName}}</ion-card-title> -->
+            <ion-card-subtitle>
+              <ion-chip class="deceased" *ngIf="student.StudentFatherDeceased==='1'">F</ion-chip>
+              <ion-chip class="deceased" *ngIf="student.StudentMotherDeceased==='1'">M</ion-chip>
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            Here's a small text description for the card content.
+          </ion-card-content>
+
+          <ion-button fill="clear" (click)="ViewStudent(indexOfelement)">View</ion-button>
+          <ion-button fill="clear" (click)="DeleteStudent(student.id)">Delete</ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ng-template #listView>
+        <table mat-table [dataSource]="students|filter:Searchterm|filter:statusFilter" class="mat-elevation-z8">
+      
+          <!-- <ng-container matColumnDef="SNo">
+            <th mat-header-cell *matHeaderCellDef> S.no </th>
+            <td mat-cell *matCellDef="let element; let i = index;">{{ i }}</td>
+          </ng-container> -->
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let student">  
+            <ion-chip>
+              <ion-avatar>
+                <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>
+              <ion-label>{{student.StudentGender}} {{student.StudentFirstName}}  {{student.StudentLastName}} </ion-label>
+              <!-- <ion-icon ></ion-icon> -->
+            </ion-chip>
+          </td>
+          </ng-container>
+      
+          <!-- Age Column -->
+          <ng-container matColumnDef="Age">
+            <th mat-header-cell *matHeaderCellDef> Age (yr)</th>
+            <td mat-cell *matCellDef="let student"> {{getAge(student.StudentDOB)}} </td>
+          </ng-container>
+      
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Education">
+            <th mat-header-cell *matHeaderCellDef>Class/ Grade </th>
+            <td mat-cell *matCellDef="let student"> {{student.StudentCurrentEducation?student.StudentCurrentEducation:''}} </td>
+          </ng-container>
+
+          <!-- Parents Column -->
+          <ng-container matColumnDef="Deceased">
+            <th mat-header-cell *matHeaderCellDef>Deceased Parent(F/M)</th>
+            <td mat-cell *matCellDef="let student"> 
+              <ion-chip class="deceased" *ngIf="student.StudentFatherDeceased==='1'">F</ion-chip>
+              <ion-chip class="deceased" *ngIf="student.StudentMotherDeceased==='1'">M</ion-chip>
+            </td>
+          </ng-container>
+
+          <!-- Sponsor Column -->
+          <!-- <ng-container matColumnDef="Sponsor">
+            <th mat-header-cell *matHeaderCellDef> Sponsor </th>
+            <td mat-cell *matCellDef="let student"> 
+              
+              <ion-chip>
+                <ion-icon name="pulse" color="primary"></ion-icon>
+                <ion-label>Gulbarg Singh</ion-label>
+                <ion-avatar>
+                  <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+                </ion-avatar>   
+              </ion-chip>
+            </td>
+          </ng-container> -->
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="Guide">
+            <th mat-header-cell *matHeaderCellDef> Guide </th>
+            <td mat-cell *matCellDef="let student"> 
+              <ion-chip>
+                <ion-icon name="man" color="primary"></ion-icon>
+                <ion-label>Kawaljeet Singh</ion-label>
+                <!-- <ion-icon name="eye"></ion-icon> -->
+                <ion-avatar>
+                  <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+                </ion-avatar>   
+              </ion-chip>
+            </td>
+          </ng-container>
+      
+          <!-- Status Column -->
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let student"> 
+              <ion-chip>
+                <ion-label color="secondary">{{student.status}}</ion-label>
+              </ion-chip>
+            </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let student;let rowId = index;"> 
+                <ion-button (click)="presentActionSheet(rowId,student.id)">
+                  Action
+                  <ion-icon slot="end" name="ellipsis-horizontal"></ion-icon>
+                </ion-button>
+              
+            </td>
+           
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+        </table>
+    </ng-template>
+
+  </ion-grid>
+
+  <!-- Skelton Loader -->
+  <ion-list *ngIf="!loaded" >
+    <ion-grid *ngFor="let number of [0,1,2]">
+      <ion-list-header>
+        <ion-skeleton-text [animated]="true" style="width: 30%"></ion-skeleton-text>
+      </ion-list-header>
+      <ion-item >
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-grid>
+  </ion-list>
+  
+  <!-- add student button -->
+  <ion-fab vertical="bottom" horizontal="end " slot="fixed">
+    <ion-fab-button routerLink="/student/add">
+      <ion-icon name="person-add-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

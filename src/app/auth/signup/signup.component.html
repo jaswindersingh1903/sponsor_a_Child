@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Sponsor a child</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon slot="icon-only" name="caret-forward-circle"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="new_sponsor" (ngSubmit)="register()">
+    <ion-item fill="solid" class="ion-margin-buttom">
+      <ion-input placeholder="First Name"  type="email" formControlName="first_name"></ion-input>
+      <ion-note slot="error" *ngIf="(first_name.dirty || first_name.touched) && first_name.errors">First Name is required.</ion-note>
+    </ion-item>
+    <ion-item fill="solid" class="ion-margin-buttom">
+      <ion-input placeholder="Last Name"  formControlName="last_name"></ion-input>
+      <ion-note slot="error" *ngIf="(last_name.dirty || last_name.touched) && last_name.errors">Last Name is required.</ion-note>
+    </ion-item>
+    <ion-item fill="solid" class="ion-margin-buttom">
+      <ion-input placeholder="Phone Number" type="number"  formControlName="phoneNumber"></ion-input>
+      <ion-note slot="error" *ngIf="(phoneNumber.dirty || phoneNumber.touched) && phoneNumber.errors">Phone Number is required.</ion-note>
+    </ion-item>
+    <ion-item fill="solid" class="ion-margin-buttom">
+      <ion-input placeholder="Email Id"  type="email" formControlName="email"></ion-input>
+      <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Email is required.</ion-note>
+    </ion-item>
+    <ion-item fill="solid" class="ion-margin-buttom">
+      <ion-input placeholder="password" type="password" formControlName="password"></ion-input>
+      <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Minimum lenght is six(6).</ion-note>
+    </ion-item>
+    <ion-button expand="full" type="button" (click)="register()" [disabled]="!new_sponsor.valid">Register</ion-button>
+    <ion-button expand="full" type="button" [routerLink]="'/auth/login'">Login</ion-button>
+
+  </form>
+</ion-content>

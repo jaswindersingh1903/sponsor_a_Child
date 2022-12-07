@@ -1,0 +1,82 @@
+<!-- <ion-app>
+  <ion-split-pane when="sm" contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      
+      <ion-content>
+        
+        <ion-list id="inbox-list">
+        <ion-list-header>Manpreet Singh</ion-list-header> 
+        <ion-note>Manpreet@gmail.com (9419054582)</ion-note>
+          <ion-menu-toggle auto-hide="true" *ngFor="let p of appPages; let i = index">
+            <ion-item button routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+
+      </ion-content>
+      
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+  
+</ion-app> -->
+<ion-app>
+  <ion-split-pane when="xl" contentId="main-content">
+    <ion-menu contentId="main-content">
+
+      <ion-content>
+        <ion-list id="inbox-list">
+          <!-- <ion-list-header>Manpreet Singh</ion-list-header>
+          <ion-note>Manpreet@gmail.com (9419054582)</ion-note> -->
+          <ion-menu-toggle [autoHide]="false" *ngFor="let p of appPages; let i = index">
+            <ion-item button routerDirection="root" [routerLink]="[p.url]"  lines="none" detail="false"
+              routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+            
+          </ion-menu-toggle>
+          <ion-menu-toggle [autoHide]="false" >
+            <ion-item button routerDirection="root"  (click) = "logout()" lines="none" detail="false"
+              routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
+              <ion-label>Logout</ion-label>
+            </ion-item>
+            
+          </ion-menu-toggle>
+          
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <div class="ion-page" id="main-content">
+
+      <!--  <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-toggle>
+              <ion-button>
+                <ion-icon slot="icon-only" name="menu"></ion-icon>
+              </ion-button>
+            </ion-menu-toggle>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header> -->
+      <!-- <ion-footer>
+        <ion-toolbar>
+          <ion-title>
+            GSEFUSA &copy; All rights reserved
+          </ion-title>
+        </ion-toolbar>
+      </ion-footer> -->
+      <ion-content class="ion-padding">
+        <ion-router-outlet id="main-content"></ion-router-outlet>
+      </ion-content>
+    </div>
+
+  </ion-split-pane>
+
+</ion-app>

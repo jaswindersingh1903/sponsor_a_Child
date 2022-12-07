@@ -1,0 +1,138 @@
+/* iOS places the subtitle above the title */
+ion-card-header.ios {
+    display: flex;
+    flex-flow: column-reverse;
+  }
+
+  .grey-bg {
+    background-color: #00000027;
+    // border: solid 1px #fff;
+    // color: #fff;
+    // text-align: center;
+  }
+
+  ion-skeleton-text {
+    --border-radius: 9999px;
+    --background: rgba(0, 132, 255, 0.435);
+    --background-rgb: 56, 128, 255;
+  }
+
+  .list-Item {
+    --background: #f2671c8f;
+    --color: #fff;
+  
+    --border-color: orange;
+    // --border-style: dashed;
+    --border-width: 2px;
+  
+    // --border-radius: 20px;
+  
+    --ripple-color: rgb(0, 66, 128);
+  
+    --detail-icon-color: white;
+    --detail-icon-opacity: 1;
+    --detail-icon-font-size: 20px;
+  }
+
+  .deceased {
+    --background: #e71010;
+    --color: #fbfbfb;
+  }
+
+  table.mat-table {
+    overflow: auto;
+
+    display: table;
+    width: 100%;
+    th {
+        background-color: #f2671c9a;
+        color: white;
+    }
+
+    
+/* .mat-column-SNo {
+  width: 12%;
+  border-right: 1px solid black;
+  // padding-right: 12px;
+  text-align: center;
+} */
+.mat-column-Name {
+  width: 12px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+.mat-column-Age {
+  width: 12px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+.mat-column-Education {
+  width: 12px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+.mat-column-Status {
+  width: 32px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+.mat-column-Sponsor {
+  width: 12px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+.mat-column-Guide {
+  width: 32px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+.mat-column-Action {
+  width: 12px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+.mat-column-Deceased {
+  width: 32px;
+  border-right: 1px solid black;
+  padding-right: 14px;
+  text-align: center;
+}
+
+.student-action-class{
+
+}
+/* Note: These styles should be located in your global stylesheet */
+ion-action-sheet.student-action-class .action-sheet-group {
+  background: #f58840;
+}
+
+ion-action-sheet.student-action-class .action-sheet-title {
+  color: #fff;
+}
+
+ion-action-sheet.student-action-class .action-sheet-cancel::after {
+  background: #e97223;
+}
+
+ion-action-sheet.student-action-class .action-sheet-button,
+ion-action-sheet.student-action-class .action-sheet-button.ion-focused {
+  color: #000000;
+}
+
+@media (any-hover: hover) {
+  ion-action-sheet.student-action-class .action-sheet-button:hover {
+    color: #000000;
+  }
+}
+
+ion-action-sheet.student-action-class ion-backdrop {
+  opacity: 0.6;
+}
+}
